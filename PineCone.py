@@ -18,7 +18,11 @@ def put(ids, vectors):
     vectors_list = [(str(id_), tuple(values)) for id_, *values in arr]
     return index.upsert(vectors=vectors_list)
 
-def get(vector):
+def get(Vector):
+    ndarray = np.array(Vector)
+
+    # Convert to list
+    vector = ndarray.tolist()
     res = index.query(queries=[vector],top_k=1)
     return res
 # ids = []

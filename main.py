@@ -31,22 +31,16 @@ def start():
     vectors = [list(check(chunk).vector) for chunk in texts]
     print(put(ids,vectors))
 
+print("if you want to finish this conversation , write ``finish``")
+prompt = ""
+while True:
+    q = input("me : ")
+    if q == "finish":
+        break
+    result = get(check(q).vector)
+    index = int(str(result["results"][0]["matches"][0]["id"]).replace("text",""))
 
-# print(vectors)
-# print("if you want to finish this conversation , write ``finish``")
-# prompt = ""
-# __start__()
-# while True:
-#     q = input("me : ")
-#     if q == "finish":
-#         break
-#     # print(len(check(q).vector))
-#
-#     result = PineCone.get(check(q).vector)
-#     print(result)
-
-
-
+    print(texts[index])
 
 
 
