@@ -1,0 +1,5 @@
+Pinecone_api_key: f7bfaec9-d45a-42fc-9666-2a7d75a3d1e8
+environment: us-west4-gcp
+index_name: pdf
+openai_key: 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
+file: test.pdf

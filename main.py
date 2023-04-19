@@ -2,7 +2,7 @@ import yaml
 
 from PineCone import put,get
 import PyPDF2
-from chatGpt import chatGPT
+from chatGpt import answer , chatGPT
 import spacy
 # first download the en_core_web_lg model
 # use this command <python -m spacy download en_core_web_lg>
@@ -11,24 +11,29 @@ with open('config.yaml') as f:
 check = spacy.load('en_core_web_lg')
 
 
-file_path = config["file"]
 
 
+paths = []
 texts = []
+import os
 
-with open(file_path,'rb') as f:
+with open("data.txt","r",encoding="utf8") as f:
+    data = f.read()
 
-    pdf_reader = PyPDF2.PdfReader(f)
-    all_texts = ""
+    chunkss = data.split(". ")
+chunks = []
 
-    for page_num in range(len(pdf_reader.pages)):
-        page_text = pdf_reader.pages[page_num].extract_text()
-        texts.append(page_text)
+for i in range(0,len(chunkss),3):
+    chunks.append(chunkss[i] + " " + chunkss[i + 1] + " " + chunkss[i + 2])
 
 
+
+
+
+#
 def start():
-    ids = ["text" + str(i) for i in range(len(texts))]
-    vectors = [list(check(chunk).vector) for chunk in texts]
+    ids = ["text" + str(i) for i in range(len(chunks))]
+    vectors = [list(check(chunk).vector) for chunk in chunks]
     print(put(ids,vectors))
 
 print("if you want to finish this conversation , write ``finish``")
@@ -40,9 +45,10 @@ while True:
     result = get(check(q).vector)
     index = int(str(result["results"][0]["matches"][0]["id"]).replace("text",""))
 
-    print(texts[index])
 
 
+    reply = chatGPT(q=q , text=chunks[index])
+    print("doc : " + reply)
 
 
 

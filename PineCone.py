@@ -3,7 +3,7 @@ import pinecone
 import pandas as pd
 import numpy as np
 import yaml
-
+# use python 311
 with open('config.yaml') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 pinecone.init(api_key=config["Pinecone_api_key"],environment=config["environment"])
