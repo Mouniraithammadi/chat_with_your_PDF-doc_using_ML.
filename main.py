@@ -38,24 +38,20 @@ def start():
 
 print("if you want to finish this conversation , write ``finish``")
 prompt = ""
-while True:
-    q = input("me : ")
-    if q == "finish":
-        break
+def  support(q):
+   
     result = get(check(q).vector)
     index = int(str(result["results"][0]["matches"][0]["id"]).replace("text",""))
 
 
 
     reply = chatGPT(q=q , text=chunks[index])
-    print("doc : " + reply)
+   return reply
 
 
 
-    # prompt = prompt +q
-    # r = chatGPT(prompt)
-    #
-    # print("chat : "+ r)
-    # prompt += r
+   
+    
+    
 
 print("finish...")
